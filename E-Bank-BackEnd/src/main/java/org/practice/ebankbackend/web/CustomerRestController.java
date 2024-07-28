@@ -6,6 +6,7 @@ import org.practice.ebankbackend.dtos.AccountOperationDTO;
 import org.practice.ebankbackend.dtos.CustomerDTO;
 import org.practice.ebankbackend.exceptions.CustomerNotFoundException;
 import org.practice.ebankbackend.services.BankAccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Slf4j
+@CrossOrigin("*")
 public class CustomerRestController {
 
    private BankAccountService bankAccountService;
@@ -20,6 +22,11 @@ public class CustomerRestController {
    @GetMapping("/customers")
    private List<CustomerDTO> customersList() {
       return bankAccountService.customersList();
+   }
+
+   @GetMapping("/customers/search")
+   private List<CustomerDTO> searchCustomers(@RequestParam(name ="searchText",defaultValue = "") String keyword) {
+      return bankAccountService.searchCustomers(keyword);
    }
 
    @GetMapping("/customers/{id}")
